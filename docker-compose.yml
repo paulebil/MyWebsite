@@ -8,6 +8,8 @@ services:
     ports:
       - 80:80
       - 443:443
+    environment:
+      CF_DNS_API_TOKEN: ${CF_DNS_API_TOKEN}
     env_file: .env
     volumes:
       - /etc/localtime:/etc/localtime:ro
@@ -15,11 +17,12 @@ services:
       - ./data/traefik.yml:/traefik.yml:ro
       - ./data/acme.json:/acme.json
     labels:
-      # Dashboard
+      # Traefik Dashboard
       - "traefik.enable=true"
       - "traefik.http.routers.traefik.rule=Host(`dashboard.ebilpaul.store`)"
       - "traefik.http.routers.traefik.entrypoints=http"
       - "traefik.http.middlewares.traefik-auth.basicauth.users=${TRAEFIK_DASHBOARD_CREDENTIALS}"
+      - "traefik.http.middlewares.traefik-https-redirect.redirectscheme.scheme=https"
       - "traefik.http.routers.traefik.middlewares=traefik-https-redirect"
       - "traefik.http.routers.traefik-secure.rule=Host(`dashboard.ebilpaul.store`)"
       - "traefik.http.routers.traefik-secure.entrypoints=https"
@@ -29,12 +32,9 @@ services:
       - "traefik.http.routers.traefik-secure.service=api@internal"
       - "traefik.http.routers.traefik-secure.tls.domains[0].main=ebilpaul.store"
       - "traefik.http.routers.traefik-secure.tls.domains[0].sans=*.ebilpaul.store"
-      # HTTP → HTTPS redirect middleware
-      - "traefik.http.middlewares.https-redirect.redirectscheme.scheme=https"
 
   my-web:
     image: nginx
-    container_name: my-web
     volumes:
       - ./html:/usr/share/nginx/html:ro
       - ./nginx.conf:/etc/nginx/nginx.conf:ro
@@ -42,10 +42,8 @@ services:
       - proxy
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.myweb.rule=Host(`ebilpaul.store`,`www.ebilpaul.store`)"
-      - "traefik.http.routers.myweb.entrypoints=http,https"
-      - "traefik.http.routers.myweb.middlewares=https-redirect@docker"
-      - "traefik.http.routers.myweb.tls=true"
+      - "traefik.http.routers.myweb.rule=Host(`ebilpaul.store`)"
+      - "traefik.http.routers.myweb.entrypoints=https"
       - "traefik.http.routers.myweb.tls.certresolver=cloudflare"
 
 networks:
