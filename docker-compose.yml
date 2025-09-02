@@ -1,51 +1,55 @@
+version: '3.8'
+
+networks:
+  traefik_network:
+    driver: bridge
+
 services:
   traefik:
     image: traefik:v3.0
     container_name: traefik
     restart: unless-stopped
-    networks:
-      - proxy
     ports:
-      - 80:80
-      - 443:443
+      - "80:80"
+      - "443:443"
     environment:
-      CF_DNS_API_TOKEN: ${CF_DNS_API_TOKEN}
-    env_file: .env
+      - CF_DNS_API_TOKEN=${CF_DNS_API_TOKEN}
     volumes:
       - /etc/localtime:/etc/localtime:ro
       - /var/run/docker.sock:/var/run/docker.sock:ro
       - ./data/traefik.yml:/traefik.yml:ro
       - ./data/acme.json:/acme.json
+    networks:
+      - traefik_network
+    env_file: .env
     labels:
-      # Traefik Dashboard
+      # Traefik dashboard router
       - "traefik.enable=true"
-      - "traefik.http.routers.traefik.rule=Host(`dashboard.ebilpaul.store`)"
-      - "traefik.http.routers.traefik.entrypoints=http"
-      - "traefik.http.middlewares.traefik-auth.basicauth.users=${TRAEFIK_DASHBOARD_CREDENTIALS}"
-      - "traefik.http.middlewares.traefik-https-redirect.redirectscheme.scheme=https"
-      - "traefik.http.routers.traefik.middlewares=traefik-https-redirect"
-      - "traefik.http.routers.traefik-secure.rule=Host(`dashboard.ebilpaul.store`)"
-      - "traefik.http.routers.traefik-secure.entrypoints=https"
-      - "traefik.http.routers.traefik-secure.tls=true"
-      - "traefik.http.routers.traefik-secure.tls.certresolver=cloudflare"
-      - "traefik.http.routers.traefik-secure.middlewares=traefik-auth"
-      - "traefik.http.routers.traefik-secure.service=api@internal"
-      - "traefik.http.routers.traefik-secure.tls.domains[0].main=ebilpaul.store"
-      - "traefik.http.routers.traefik-secure.tls.domains[0].sans=*.ebilpaul.store"
+      - "traefik.http.routers.traefik-dashboard.rule=Host(`dashboard.ebilpaul.store`)"
+      - "traefik.http.routers.traefik-dashboard.entrypoints=https"
+      - "traefik.http.routers.traefik-dashboard.tls=true"
+      - "traefik.http.routers.traefik-dashboard.tls.certresolver=cloudflare"
+      - "traefik.http.routers.traefik-dashboard.tls.domains[0].main=ebilpaul.store"
+      - "traefik.http.routers.traefik-dashboard.tls.domains[0].sans=*.ebilpaul.store"
+      - "traefik.http.routers.traefik-dashboard.service=api@internal"
+      - "traefik.http.routers.traefik-dashboard.middlewares=auth"
+      - "traefik.http.middlewares.auth.basicauth.users=${TRAEFIK_DASHBOARD_CREDENTIALS}"
 
-  my-web:
-    image: nginx
+  nginx:
+    image: nginx:latest
+    container_name: nginx
+    restart: unless-stopped
     volumes:
       - ./html:/usr/share/nginx/html:ro
-      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf:ro
     networks:
-      - proxy
+      - traefik_network
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.myweb.rule=Host(`ebilpaul.store`)"
-      - "traefik.http.routers.myweb.entrypoints=https"
-      - "traefik.http.routers.myweb.tls.certresolver=cloudflare"
-
-networks:
-  proxy:
-    external: false
+      - "traefik.http.routers.nginx.rule=Host(`ebilpaul.store`)"
+      - "traefik.http.routers.nginx.entrypoints=https"
+      - "traefik.http.routers.nginx.tls=true"
+      - "traefik.http.routers.nginx.tls.certresolver=cloudflare"
+      - "traefik.http.services.nginx.loadbalancer.server.port=80"
+    expose:
+      - "80"
