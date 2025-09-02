@@ -19,6 +19,7 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock:ro
       - ./data/traefik.yml:/traefik.yml:ro
       - ./data/acme.json:/acme.json
+      - ./data/middlewares.yml:/middlewares.yml:ro 
     networks:
       - traefik_network
     env_file: .env
@@ -32,8 +33,9 @@ services:
       - "traefik.http.routers.traefik-dashboard.tls.domains[0].main=ebilpaul.store"
       - "traefik.http.routers.traefik-dashboard.tls.domains[0].sans=*.ebilpaul.store"
       - "traefik.http.routers.traefik-dashboard.service=api@internal"
-      - "traefik.http.routers.traefik-dashboard.middlewares=auth"
-      - "traefik.http.middlewares.auth.basicauth.users=${TRAEFIK_DASHBOARD_CREDENTIALS}"
+      # - "traefik.http.routers.traefik-dashboard.middlewares=auth"
+      # - "traefik.http.middlewares.auth.basicauth.users=${TRAEFIK_DASHBOARD_CREDENTIALS}"
+      - "traefik.http.routers.traefik-dashboard.middlewares=auth@file"
 
   nginx:
     image: nginx:latest

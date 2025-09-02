@@ -17,6 +17,9 @@ providers:
   docker:
     endpoint: "unix:///var/run/docker.sock"
     exposedByDefault: false
+  file:  
+    filename: /middlewares.yml
+    watch: true
 certificatesResolvers:
   cloudflare:
     acme:
