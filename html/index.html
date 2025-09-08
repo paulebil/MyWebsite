@@ -4,103 +4,43 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
   <title>Ebil Paul | Backend Engineer & CS Scientist</title>
   <link rel="apple-touch-icon" sizes="180x180" href="./favicon_io/apple-touch-icon.png">
   <link rel="icon" type="image/png" sizes="32x32" href="./favicon_io/favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="./favicon_io/favicon-16x16.png">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: '#6366f1',
+            'primary-dark': '#4f46e5',
+            secondary: '#ec4899',
+            accent: '#06b6d4',
+            'bg-dark': '#0f172a',
+            'bg-darker': '#020617',
+          },
+          fontFamily: {
+            'inter': ['Inter', 'sans-serif'],
+          },
+          animation: {
+            'pulse-slow': 'pulse 4s ease-in-out infinite alternate',
+            'shimmer': 'shimmer 3s ease-in-out infinite',
+            'fadeInUp': 'fadeInUp 1s ease-out',
+            'fadeInUpDelay1': 'fadeInUp 0.8s ease-out 0.2s both',
+            'fadeInUpDelay2': 'fadeInUp 0.8s ease-out 0.4s both',
+            'fadeInUpDelay3': 'fadeInUp 0.8s ease-out 0.6s both',
+          },
+          backdropBlur: {
+            'xl': '20px',
+          }
+        }
+      }
+    }
+  </script>
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    :root {
-      --primary: #6366f1;
-      --primary-dark: #4f46e5;
-      --secondary: #ec4899;
-      --accent: #06b6d4;
-      --bg-dark: #0f172a;
-      --bg-darker: #020617;
-      --bg-light: #f1f5f9;
-      --text-light: #94a3b8;
-      --text-white: #f8fafc;
-      --glass: rgba(255, 255, 255, 0.05);
-      --border: rgba(255, 255, 255, 0.1);
-    }
-
-    body {
-      font-family: 'Inter', sans-serif;
-      background: var(--bg-darker);
-      color: var(--text-white);
-      overflow-x: hidden;
-      line-height: 1.6;
-    }
-
-    /* Background Animation */
-    .bg-animation {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      z-index: -1;
-      background: linear-gradient(45deg, var(--bg-darker), var(--bg-dark));
-    }
-
-    .bg-animation::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: radial-gradient(circle at 20% 80%, var(--primary) 0%, transparent 50%),
-        radial-gradient(circle at 80% 20%, var(--secondary) 0%, transparent 50%);
-      opacity: 0.1;
-      animation: pulse 4s ease-in-out infinite alternate;
-    }
-
-    @keyframes pulse {
-      0% {
-        opacity: 0.05;
-      }
-
-      100% {
-        opacity: 0.15;
-      }
-    }
-
-    /* Header Styles */
-    header {
-      position: relative;
-      height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      padding: 2rem;
-      background: linear-gradient(135deg, var(--bg-darker) 0%, var(--bg-dark) 100%);
-    }
-
-    .hero-content {
-      max-width: 800px;
-      animation: fadeInUp 1s ease-out;
-    }
-
-    .hero-title {
-      font-size: clamp(2.5rem, 8vw, 5rem);
-      font-weight: 700;
-      margin-bottom: 1rem;
-      background: linear-gradient(135deg, var(--primary), var(--secondary), var(--accent));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      animation: shimmer 3s ease-in-out infinite;
-    }
-
     @keyframes shimmer {
 
       0%,
@@ -113,340 +53,6 @@
       }
     }
 
-    .hero-subtitle {
-      font-size: 1.5rem;
-      color: var(--text-light);
-      margin-bottom: 2rem;
-      font-weight: 300;
-    }
-
-    .hero-description {
-      font-size: 1.1rem;
-      color: var(--text-light);
-      margin-bottom: 3rem;
-      max-width: 600px;
-      margin-left: auto;
-      margin-right: auto;
-    }
-
-    /* Navigation */
-    nav {
-      position: fixed;
-      top: 2rem;
-      left: 50%;
-      transform: translateX(-50%);
-      background: var(--glass);
-      backdrop-filter: blur(20px);
-      border: 1px solid var(--border);
-      border-radius: 50px;
-      padding: 0.8rem 2rem;
-      z-index: 1000;
-      transition: all 0.3s ease;
-    }
-
-    nav.scrolled {
-      background: rgba(15, 23, 42, 0.95);
-      backdrop-filter: blur(30px);
-    }
-
-    nav a {
-      color: var(--text-white);
-      text-decoration: none;
-      margin: 0 1.5rem;
-      font-weight: 500;
-      position: relative;
-      transition: color 0.3s ease;
-    }
-
-    nav a:hover {
-      color: var(--primary);
-    }
-
-    nav a::after {
-      content: '';
-      position: absolute;
-      width: 0;
-      height: 2px;
-      bottom: -5px;
-      left: 50%;
-      background: linear-gradient(90deg, var(--primary), var(--secondary));
-      transition: all 0.3s ease;
-      transform: translateX(-50%);
-    }
-
-    nav a:hover::after {
-      width: 100%;
-    }
-
-    /* CTA Buttons */
-    .cta-buttons {
-      display: flex;
-      gap: 1rem;
-      justify-content: center;
-      flex-wrap: wrap;
-    }
-
-    .btn {
-      padding: 1rem 2rem;
-      border: none;
-      border-radius: 50px;
-      font-weight: 600;
-      text-decoration: none;
-      transition: all 0.3s ease;
-      position: relative;
-      overflow: hidden;
-      cursor: pointer;
-    }
-
-    .btn-primary {
-      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-      color: white;
-    }
-
-    .btn-secondary {
-      background: var(--glass);
-      color: var(--text-white);
-      border: 1px solid var(--border);
-      backdrop-filter: blur(10px);
-    }
-
-    .btn:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 10px 30px rgba(99, 102, 241, 0.3);
-    }
-
-    /* Main Content */
-    main {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 2rem;
-    }
-
-    section {
-      margin: 6rem 0;
-      opacity: 0;
-      transform: translateY(30px);
-      animation: fadeInUp 0.8s ease-out forwards;
-    }
-
-    section:nth-child(2) {
-      animation-delay: 0.2s;
-    }
-
-    section:nth-child(3) {
-      animation-delay: 0.4s;
-    }
-
-    section:nth-child(4) {
-      animation-delay: 0.6s;
-    }
-
-    .section-title {
-      font-size: 3rem;
-      font-weight: 700;
-      text-align: center;
-      margin-bottom: 3rem;
-      background: linear-gradient(135deg, var(--text-white), var(--text-light));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-
-    /* Glass Card */
-    .glass-card {
-      background: var(--glass);
-      backdrop-filter: blur(20px);
-      border: 1px solid var(--border);
-      border-radius: 20px;
-      padding: 2rem;
-      transition: all 0.3s ease;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .glass-card::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 1px;
-      background: linear-gradient(90deg, transparent, var(--primary), transparent);
-      transition: opacity 0.3s ease;
-      opacity: 0;
-    }
-
-    .glass-card:hover {
-      transform: translateY(-5px);
-      border-color: var(--primary);
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
-    }
-
-    .glass-card:hover::before {
-      opacity: 1;
-    }
-
-    /* Skills Grid */
-    .skills-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-      gap: 2rem;
-      margin-top: 2rem;
-    }
-
-    .skill-item {
-      background: var(--glass);
-      border: 1px solid var(--border);
-      border-radius: 15px;
-      padding: 1.5rem;
-      text-align: center;
-      transition: all 0.3s ease;
-      cursor: pointer;
-    }
-
-    .skill-item:hover {
-      transform: translateY(-10px) scale(1.05);
-      border-color: var(--primary);
-      box-shadow: 0 15px 30px rgba(99, 102, 241, 0.2);
-    }
-
-    .skill-icon {
-      width: 50px;
-      height: 50px;
-      margin: 0 auto 1rem;
-      border-radius: 10px;
-      background: linear-gradient(135deg, var(--primary), var(--secondary));
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.5rem;
-    }
-
-    .skill-name {
-      font-weight: 600;
-      color: var(--text-white);
-    }
-
-    /* Projects Grid */
-    .projects-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-      gap: 2rem;
-      margin-top: 2rem;
-    }
-
-    .project-card {
-      background: var(--glass);
-      backdrop-filter: blur(20px);
-      border: 1px solid var(--border);
-      border-radius: 20px;
-      overflow: hidden;
-      transition: all 0.4s ease;
-      position: relative;
-    }
-
-    .project-card:hover {
-      transform: translateY(-10px);
-      box-shadow: 0 25px 50px rgba(0, 0, 0, 0.4);
-    }
-
-    .project-header {
-      background: linear-gradient(135deg, var(--primary), var(--secondary));
-      padding: 1.5rem;
-      text-align: center;
-    }
-
-    .project-title {
-      font-size: 1.5rem;
-      font-weight: 700;
-      color: white;
-      margin-bottom: 0.5rem;
-    }
-
-    .project-content {
-      padding: 2rem;
-    }
-
-    .project-description {
-      color: var(--text-light);
-      margin-bottom: 1.5rem;
-    }
-
-    .project-link {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      color: var(--primary);
-      text-decoration: none;
-      font-weight: 600;
-      transition: color 0.3s ease;
-    }
-
-    .project-link:hover {
-      color: var(--secondary);
-    }
-
-    /* Contact Section */
-    .contact-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 1.5rem;
-      margin-top: 2rem;
-    }
-
-    .contact-item {
-      display: flex;
-      align-items: center;
-      gap: 1rem;
-      padding: 1.5rem;
-      background: var(--glass);
-      border: 1px solid var(--border);
-      border-radius: 15px;
-      transition: all 0.3s ease;
-    }
-
-    .contact-item:hover {
-      transform: translateY(-5px);
-      border-color: var(--primary);
-    }
-
-    .contact-icon {
-      width: 50px;
-      height: 50px;
-      background: linear-gradient(135deg, var(--primary), var(--secondary));
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.2rem;
-    }
-
-    .contact-info h3 {
-      margin-bottom: 0.25rem;
-      color: var(--text-white);
-    }
-
-    .contact-info p,
-    .contact-info a {
-      color: var(--text-light);
-      text-decoration: none;
-    }
-
-    .contact-info a:hover {
-      color: var(--primary);
-    }
-
-    /* Footer */
-    footer {
-      text-align: center;
-      padding: 3rem 2rem;
-      margin-top: 6rem;
-      border-top: 1px solid var(--border);
-      background: var(--glass);
-      backdrop-filter: blur(20px);
-    }
-
-    /* Animations */
     @keyframes fadeInUp {
       from {
         opacity: 0;
@@ -459,117 +65,148 @@
       }
     }
 
-    /* Responsive */
-    @media (max-width: 768px) {
-      nav {
-        padding: 0.6rem 1rem;
-      }
-
-      nav a {
-        margin: 0 0.8rem;
-        font-size: 0.9rem;
-      }
-
-      .hero-title {
-        font-size: 2.5rem;
-      }
-
-      .section-title {
-        font-size: 2rem;
-      }
-
-      .cta-buttons {
-        flex-direction: column;
-        align-items: center;
-      }
-
-      .skills-grid {
-        grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
-        gap: 1rem;
-      }
-
-      .projects-grid {
-        grid-template-columns: 1fr;
-      }
+    .text-gradient {
+      background: linear-gradient(135deg, #6366f1, #ec4899, #06b6d4);
+      background-size: 200% 200%;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
     }
 
-    /* Scroll indicator */
-    .scroll-indicator {
-      position: fixed;
+    .bg-glass {
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .bg-gradient-radial {
+      background: radial-gradient(circle at 20% 80%, #6366f1 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, #ec4899 0%, transparent 50%);
+    }
+
+    .skill-hover:hover {
+      transform: translateY(-10px) scale(1.05);
+    }
+
+    .nav-link {
+      position: relative;
+    }
+
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      width: 0;
+      height: 2px;
+      bottom: -5px;
+      left: 50%;
+      background: linear-gradient(90deg, #6366f1, #ec4899);
+      transition: all 0.3s ease;
+      transform: translateX(-50%);
+    }
+
+    .nav-link:hover::after {
+      width: 100%;
+    }
+
+    .project-card::before {
+      content: '';
+      position: absolute;
       top: 0;
       left: 0;
       width: 100%;
-      height: 3px;
-      background: var(--glass);
-      z-index: 1001;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, #6366f1, transparent);
+      transition: opacity 0.3s ease;
+      opacity: 0;
     }
 
-    .scroll-progress {
-      height: 100%;
-      background: linear-gradient(90deg, var(--primary), var(--secondary));
-      width: 0%;
-      transition: width 0.1s ease;
+    .project-card:hover::before {
+      opacity: 1;
     }
   </style>
 </head>
 
-<body>
+<body class="font-inter bg-bg-darker text-slate-50 overflow-x-hidden">
   <!-- Scroll Indicator -->
-  <div class="scroll-indicator">
-    <div class="scroll-progress" id="scrollProgress"></div>
+  <div class="fixed top-0 left-0 w-full h-1 bg-white/5 z-50">
+    <div class="h-full bg-gradient-to-r from-primary to-secondary w-0 transition-all duration-100 ease-out"
+      id="scrollProgress"></div>
   </div>
 
   <!-- Background Animation -->
-  <div class="bg-animation"></div>
+  <div class="fixed inset-0 -z-10">
+    <div class="absolute inset-0 bg-gradient-to-br from-bg-darker to-bg-dark"></div>
+    <div class="absolute inset-0 bg-gradient-radial opacity-10 animate-pulse-slow"></div>
+  </div>
 
   <!-- Navigation -->
-  <nav id="navbar">
-    <a href="#home">Home</a>
-    <a href="#about">About</a>
-    <a href="#skills">Skills</a>
-    <a href="#projects">Projects</a>
-    <a href="#contact">Contact</a>
+  <nav id="navbar"
+    class="fixed top-8 left-1/2 transform -translate-x-1/2 bg-glass rounded-full px-8 py-3 z-40 transition-all duration-300">
+    <div class="flex space-x-6">
+      <a href="#home"
+        class="nav-link text-slate-50 hover:text-primary transition-colors duration-300 font-medium">Home</a>
+      <a href="#about"
+        class="nav-link text-slate-50 hover:text-primary transition-colors duration-300 font-medium">About</a>
+      <a href="#skills"
+        class="nav-link text-slate-50 hover:text-primary transition-colors duration-300 font-medium">Skills</a>
+      <a href="#projects"
+        class="nav-link text-slate-50 hover:text-primary transition-colors duration-300 font-medium">Projects</a>
+      <a href="#contact"
+        class="nav-link text-slate-50 hover:text-primary transition-colors duration-300 font-medium">Contact</a>
+    </div>
   </nav>
 
   <!-- Hero Section -->
-  <header id="home">
-    <div class="hero-content">
-      <h1 class="hero-title">👋 Hi, I'm Ebil Paul</h1>
-      <p class="hero-subtitle">Backend Engineer & Computer Scientist</p>
-      <p class="hero-description">
+  <header id="home"
+    class="relative h-screen flex items-center justify-center text-center px-8 bg-gradient-to-br from-bg-darker to-bg-dark">
+    <div class="max-w-4xl animate-fadeInUp">
+      <h1 class="text-4xl md:text-6xl lg:text-7xl font-bold mb-4 text-gradient animate-shimmer">👋 Hi, I'm Ebil Paul
+      </h1>
+      <p class="text-xl md:text-2xl text-slate-400 mb-8 font-light">Backend Engineer & Computer Scientist</p>
+      <p class="text-base md:text-lg text-slate-400 mb-12 max-w-2xl mx-auto leading-relaxed">
         Passionate about building reliable, scalable systems with a strong focus on computer vision and cloud-native
         technologies. I craft robust APIs with FastAPI and GoFiber, exploring the intersection of backend architecture
         and AI.
       </p>
-      <div class="cta-buttons">
-        <a href="#projects" class="btn btn-primary">View My Work</a>
-        <a href="#contact" class="btn btn-secondary">Get In Touch</a>
+      <div class="flex flex-col sm:flex-row gap-4 justify-center">
+        <a href="#projects"
+          class="px-8 py-4 bg-gradient-to-r from-primary to-primary-dark text-white rounded-full font-semibold hover:transform hover:-translate-y-1 hover:shadow-2xl hover:shadow-primary/30 transition-all duration-300">
+          View My Work
+        </a>
+        <a href="#contact"
+          class="px-8 py-4 bg-glass text-slate-50 rounded-full font-semibold hover:transform hover:-translate-y-1 hover:shadow-2xl transition-all duration-300">
+          Get In Touch
+        </a>
       </div>
     </div>
   </header>
 
-  <main>
+  <main class="max-w-6xl mx-auto px-8">
     <!-- About Section -->
-    <section id="about">
-      <h2 class="section-title">About Me</h2>
-      <div class="glass-card">
-        <p style="font-size: 1.1rem; margin-bottom: 1.5rem;">
-          I'm a backend engineer and computer scientist passionate about building reliable, scalable systems with a strong
-          interest in computer vision and its real-world applications. I actively build with <strong
-            style="color: var(--primary);">FastAPI</strong> (Python) and <strong
-            style="color: var(--secondary);">GoFiber</strong> (Go), focusing on clean, backend-first architecture.
+    <section id="about" class="my-24 opacity-0 translate-y-8 animate-fadeInUpDelay1">
+      <h2
+        class="text-4xl md:text-5xl font-bold text-center mb-12 bg-gradient-to-b from-slate-50 to-slate-400 bg-clip-text text-transparent">
+        About Me</h2>
+      <div
+        class="bg-glass rounded-3xl p-8 hover:transform hover:-translate-y-2 hover:border-primary/50 hover:shadow-2xl transition-all duration-300 relative overflow-hidden project-card">
+        <p class="text-lg mb-6 leading-relaxed">
+          I'm a backend engineer and computer scientist passionate about building reliable, scalable systems with a
+          strong
+          interest in computer vision and its real-world applications. I actively build with <span
+            class="text-primary font-semibold">FastAPI</span> (Python) and <span
+            class="text-secondary font-semibold">GoFiber</span> (Go), focusing on clean, backend-first architecture.
         </p>
 
-        <div class="glass-card" style="margin-top: 2rem; background: rgba(99, 102, 241, 0.05);">
-          <h3 style="color: var(--primary); margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem;">
+        <div class="bg-primary/5 border border-primary/20 rounded-2xl p-6 mt-8">
+          <h3 class="text-primary mb-4 flex items-center gap-2 font-semibold text-lg">
             👨‍💻 My Coding Journey
           </h3>
-          <p style="margin-bottom: 1rem;">
+          <p class="mb-4 text-slate-300 leading-relaxed">
             I started as a curious CS student, fascinated by infrastructure and system design. I naturally gravitated
             toward backend development, building APIs with FastAPI and GoFiber, and exploring cloud-native technologies.
             I'm also deeply interested in computer vision, exploring applications in healthcare and diagnostics.
           </p>
-          <p style="color: var(--text-light);">
+          <p class="text-slate-400">
             This portfolio reflects my journey: learning publicly, building purposefully, and continuously leveling up.
           </p>
         </div>
@@ -577,92 +214,129 @@
     </section>
 
     <!-- Skills Section -->
-    <section id="skills">
-      <h2 class="section-title">Languages & Tools</h2>
-      <div class="skills-grid">
-        <div class="skill-item">
-          <div class="skill-icon">🐍</div>
-          <div class="skill-name">Python</div>
+    <section id="skills" class="my-24 opacity-0 translate-y-8 animate-fadeInUpDelay2">
+      <h2
+        class="text-4xl md:text-5xl font-bold text-center mb-12 bg-gradient-to-b from-slate-50 to-slate-400 bg-clip-text text-transparent">
+        Languages & Tools</h2>
+      <div class="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 gap-6">
+        <div
+          class="skill-hover bg-glass border border-white/10 rounded-2xl p-6 text-center cursor-pointer transition-all duration-300 hover:border-primary/50 hover:shadow-xl hover:shadow-primary/20">
+          <div
+            class="w-12 h-12 mx-auto mb-4 rounded-xl bg-gradient-to-br from-primary to-secondary flex items-center justify-center text-2xl">
+            🐍</div>
+          <div class="font-semibold text-sm">Python</div>
         </div>
-        <div class="skill-item">
-          <div class="skill-icon">🐹</div>
-          <div class="skill-name">Go</div>
+        <div
+          class="skill-hover bg-glass border border-white/10 rounded-2xl p-6 text-center cursor-pointer transition-all duration-300 hover:border-primary/50 hover:shadow-xl hover:shadow-primary/20">
+          <div
+            class="w-12 h-12 mx-auto mb-4 rounded-xl bg-gradient-to-br from-primary to-secondary flex items-center justify-center text-2xl">
+            🐹</div>
+          <div class="font-semibold text-sm">Go</div>
         </div>
-        <div class="skill-item">
-          <div class="skill-icon">🐳</div>
-          <div class="skill-name">Docker</div>
+        <div
+          class="skill-hover bg-glass border border-white/10 rounded-2xl p-6 text-center cursor-pointer transition-all duration-300 hover:border-primary/50 hover:shadow-xl hover:shadow-primary/20">
+          <div
+            class="w-12 h-12 mx-auto mb-4 rounded-xl bg-gradient-to-br from-primary to-secondary flex items-center justify-center text-2xl">
+            🐳</div>
+          <div class="font-semibold text-sm">Docker</div>
         </div>
-        <div class="skill-item">
-          <div class="skill-icon">☸️</div>
-          <div class="skill-name">Kubernetes</div>
+        <div
+          class="skill-hover bg-glass border border-white/10 rounded-2xl p-6 text-center cursor-pointer transition-all duration-300 hover:border-primary/50 hover:shadow-xl hover:shadow-primary/20">
+          <div
+            class="w-12 h-12 mx-auto mb-4 rounded-xl bg-gradient-to-br from-primary to-secondary flex items-center justify-center text-2xl">
+            ☸️</div>
+          <div class="font-semibold text-sm">Kubernetes</div>
         </div>
-        <div class="skill-item">
-          <div class="skill-icon">🐘</div>
-          <div class="skill-name">PostgreSQL</div>
+        <div
+          class="skill-hover bg-glass border border-white/10 rounded-2xl p-6 text-center cursor-pointer transition-all duration-300 hover:border-primary/50 hover:shadow-xl hover:shadow-primary/20">
+          <div
+            class="w-12 h-12 mx-auto mb-4 rounded-xl bg-gradient-to-br from-primary to-secondary flex items-center justify-center text-2xl">
+            🐘</div>
+          <div class="font-semibold text-sm">PostgreSQL</div>
         </div>
-        <div class="skill-item">
-          <div class="skill-icon">🔀</div>
-          <div class="skill-name">Git</div>
+        <div
+          class="skill-hover bg-glass border border-white/10 rounded-2xl p-6 text-center cursor-pointer transition-all duration-300 hover:border-primary/50 hover:shadow-xl hover:shadow-primary/20">
+          <div
+            class="w-12 h-12 mx-auto mb-4 rounded-xl bg-gradient-to-br from-primary to-secondary flex items-center justify-center text-2xl">
+            🔀</div>
+          <div class="font-semibold text-sm">Git</div>
         </div>
-        <div class="skill-item">
-          <div class="skill-icon">🐧</div>
-          <div class="skill-name">Linux</div>
+        <div
+          class="skill-hover bg-glass border border-white/10 rounded-2xl p-6 text-center cursor-pointer transition-all duration-300 hover:border-primary/50 hover:shadow-xl hover:shadow-primary/20">
+          <div
+            class="w-12 h-12 mx-auto mb-4 rounded-xl bg-gradient-to-br from-primary to-secondary flex items-center justify-center text-2xl">
+            🐧</div>
+          <div class="font-semibold text-sm">Linux</div>
         </div>
-        <div class="skill-item">
-          <div class="skill-icon">⚡</div>
-          <div class="skill-name">FastAPI</div>
+        <div
+          class="skill-hover bg-glass border border-white/10 rounded-2xl p-6 text-center cursor-pointer transition-all duration-300 hover:border-primary/50 hover:shadow-xl hover:shadow-primary/20">
+          <div
+            class="w-12 h-12 mx-auto mb-4 rounded-xl bg-gradient-to-br from-primary to-secondary flex items-center justify-center text-2xl">
+            ⚡</div>
+          <div class="font-semibold text-sm">FastAPI</div>
         </div>
-        <div class="skill-item">
-          <div class="skill-icon">🚀</div>
-          <div class="skill-name">GoFiber</div>
+        <div
+          class="skill-hover bg-glass border border-white/10 rounded-2xl p-6 text-center cursor-pointer transition-all duration-300 hover:border-primary/50 hover:shadow-xl hover:shadow-primary/20">
+          <div
+            class="w-12 h-12 mx-auto mb-4 rounded-xl bg-gradient-to-br from-primary to-secondary flex items-center justify-center text-2xl">
+            🚀</div>
+          <div class="font-semibold text-sm">GoFiber</div>
         </div>
       </div>
     </section>
 
     <!-- Projects Section -->
-    <section id="projects">
-      <h2 class="section-title">Featured Projects</h2>
-      <div class="projects-grid">
-        <div class="project-card">
-          <div class="project-header">
-            <h3 class="project-title">🤖 Computer Vision Projects</h3>
+    <section id="projects" class="my-24 opacity-0 translate-y-8 animate-fadeInUpDelay3">
+      <h2
+        class="text-4xl md:text-5xl font-bold text-center mb-12 bg-gradient-to-b from-slate-50 to-slate-400 bg-clip-text text-transparent">
+        Featured Projects</h2>
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div
+          class="project-card bg-glass border border-white/10 rounded-3xl overflow-hidden hover:transform hover:-translate-y-3 hover:shadow-2xl hover:shadow-black/40 transition-all duration-400 relative">
+          <div class="bg-gradient-to-br from-primary to-secondary p-6 text-center">
+            <h3 class="text-xl font-bold text-white mb-2">🤖 Computer Vision Projects</h3>
           </div>
-          <div class="project-content">
-            <p class="project-description">
+          <div class="p-8">
+            <p class="text-slate-400 mb-6 leading-relaxed">
               A comprehensive collection of computer vision projects built with PyTorch, OpenCV, and modern deep
               learning frameworks. Exploring applications in healthcare, diagnostics, and real-world AI solutions.
             </p>
-            <a href="https://github.com/paulebil/ComputerVisionNotebooks-Tut" target="_blank" class="project-link">
+            <a href="https://github.com/paulebil/ComputerVisionNotebooks-Tut" target="_blank"
+              class="inline-flex items-center gap-2 text-primary font-semibold hover:text-secondary transition-colors duration-300">
               📁 View Repository →
             </a>
           </div>
         </div>
 
-        <div class="project-card">
-          <div class="project-header">
-            <h3 class="project-title">⚡ FastAPI Applications</h3>
+        <div
+          class="project-card bg-glass border border-white/10 rounded-3xl overflow-hidden hover:transform hover:-translate-y-3 hover:shadow-2xl hover:shadow-black/40 transition-all duration-400 relative">
+          <div class="bg-gradient-to-br from-primary to-secondary p-6 text-center">
+            <h3 class="text-xl font-bold text-white mb-2">⚡ FastAPI Applications</h3>
           </div>
-          <div class="project-content">
-            <p class="project-description">
+          <div class="p-8">
+            <p class="text-slate-400 mb-6 leading-relaxed">
               Scalable backend APIs built with FastAPI, featuring clean architecture, comprehensive testing, and
               cloud-native deployment strategies for modern web applications.
             </p>
-            <a href="#" class="project-link">
+            <a href="#"
+              class="inline-flex items-center gap-2 text-primary font-semibold hover:text-secondary transition-colors duration-300">
               🔗 Coming Soon →
             </a>
           </div>
         </div>
 
-        <div class="project-card">
-          <div class="project-header">
-            <h3 class="project-title">🚀 GoFiber Services</h3>
+        <div
+          class="project-card bg-glass border border-white/10 rounded-3xl overflow-hidden hover:transform hover:-translate-y-3 hover:shadow-2xl hover:shadow-black/40 transition-all duration-400 relative">
+          <div class="bg-gradient-to-br from-primary to-secondary p-6 text-center">
+            <h3 class="text-xl font-bold text-white mb-2">🚀 GoFiber Services</h3>
           </div>
-          <div class="project-content">
-            <p class="project-description">
+          <div class="p-8">
+            <p class="text-slate-400 mb-6 leading-relaxed">
               High-performance microservices built with GoFiber, focusing on speed, reliability, and efficient resource
               utilization for enterprise-grade applications.
             </p>
-            <a href="#" class="project-link">
+            <a href="#"
+              class="inline-flex items-center gap-2 text-primary font-semibold hover:text-secondary transition-colors duration-300">
               🔗 Coming Soon →
             </a>
           </div>
@@ -671,46 +345,63 @@
     </section>
 
     <!-- Contact Section -->
-    <section id="contact">
-      <h2 class="section-title">Let's Connect</h2>
-      <div class="contact-grid">
-        <div class="contact-item">
-          <div class="contact-icon">📧</div>
-          <div class="contact-info">
-            <h3>Email</h3>
-            <a href="mailto:ebilpaul06@gmail.com">ebilpaul06@gmail.com</a>
+    <section id="contact" class="my-24">
+      <h2
+        class="text-4xl md:text-5xl font-bold text-center mb-12 bg-gradient-to-b from-slate-50 to-slate-400 bg-clip-text text-transparent">
+        Let's Connect</h2>
+      <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div
+          class="flex items-center gap-4 p-6 bg-glass border border-white/10 rounded-2xl hover:transform hover:-translate-y-2 hover:border-primary/50 transition-all duration-300">
+          <div
+            class="w-12 h-12 bg-gradient-to-br from-primary to-secondary rounded-full flex items-center justify-center text-xl">
+            📧</div>
+          <div>
+            <h3 class="font-semibold text-slate-50 mb-1">Email</h3>
+            <a href="mailto:ebilpaul06@gmail.com"
+              class="text-slate-400 hover:text-primary transition-colors duration-300 text-sm">ebilpaul06@gmail.com</a>
           </div>
         </div>
 
-        <div class="contact-item">
-          <div class="contact-icon">📱</div>
-          <div class="contact-info">
-            <h3>Phone</h3>
-            <p>+256 760852958</p>
+        <div
+          class="flex items-center gap-4 p-6 bg-glass border border-white/10 rounded-2xl hover:transform hover:-translate-y-2 hover:border-primary/50 transition-all duration-300">
+          <div
+            class="w-12 h-12 bg-gradient-to-br from-primary to-secondary rounded-full flex items-center justify-center text-xl">
+            📱</div>
+          <div>
+            <h3 class="font-semibold text-slate-50 mb-1">Phone</h3>
+            <p class="text-slate-400 text-sm">+256 760852958</p>
           </div>
         </div>
 
-        <div class="contact-item">
-          <div class="contact-icon">💻</div>
-          <div class="contact-info">
-            <h3>GitHub</h3>
-            <a href="https://github.com/paulebil" target="_blank">github.com/paulebil</a>
+        <div
+          class="flex items-center gap-4 p-6 bg-glass border border-white/10 rounded-2xl hover:transform hover:-translate-y-2 hover:border-primary/50 transition-all duration-300">
+          <div
+            class="w-12 h-12 bg-gradient-to-br from-primary to-secondary rounded-full flex items-center justify-center text-xl">
+            💻</div>
+          <div>
+            <h3 class="font-semibold text-slate-50 mb-1">GitHub</h3>
+            <a href="https://github.com/paulebil" target="_blank"
+              class="text-slate-400 hover:text-primary transition-colors duration-300 text-sm">github.com/paulebil</a>
           </div>
         </div>
 
-        <div class="contact-item">
-          <div class="contact-icon">💼</div>
-          <div class="contact-info">
-            <h3>LinkedIn</h3>
-            <a href="https://linkedin.com/in/ebilpaul" target="_blank">linkedin.com/in/ebilpaul</a>
+        <div
+          class="flex items-center gap-4 p-6 bg-glass border border-white/10 rounded-2xl hover:transform hover:-translate-y-2 hover:border-primary/50 transition-all duration-300">
+          <div
+            class="w-12 h-12 bg-gradient-to-br from-primary to-secondary rounded-full flex items-center justify-center text-xl">
+            💼</div>
+          <div>
+            <h3 class="font-semibold text-slate-50 mb-1">LinkedIn</h3>
+            <a href="https://linkedin.com/in/ebilpaul" target="_blank"
+              class="text-slate-400 hover:text-primary transition-colors duration-300 text-sm">linkedin.com/in/ebilpaul</a>
           </div>
         </div>
       </div>
     </section>
   </main>
 
-  <footer>
-    <p>&copy; 2025 Ebil Paul. Built with passion and precision. 🚀</p>
+  <footer class="text-center py-12 mt-24 border-t border-white/10 bg-glass backdrop-blur-xl">
+    <p class="text-slate-400">&copy; 2025 Ebil Paul. Built with passion and precision. 🚀</p>
   </footer>
 
   <script>
@@ -742,9 +433,11 @@
     window.addEventListener('scroll', () => {
       const navbar = document.getElementById('navbar');
       if (window.scrollY > 100) {
-        navbar.classList.add('scrolled');
+        navbar.classList.add('bg-bg-darker/95');
+        navbar.classList.add('backdrop-blur-2xl');
       } else {
-        navbar.classList.remove('scrolled');
+        navbar.classList.remove('bg-bg-darker/95');
+        navbar.classList.remove('backdrop-blur-2xl');
       }
     });
 
@@ -757,8 +450,8 @@
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
-          entry.target.style.opacity = '1';
-          entry.target.style.transform = 'translateY(0)';
+          entry.target.classList.remove('opacity-0', 'translate-y-8');
+          entry.target.classList.add('opacity-100', 'translate-y-0');
         }
       });
     }, observerOptions);
@@ -766,17 +459,6 @@
     // Observe all sections for animation
     document.querySelectorAll('section').forEach(section => {
       observer.observe(section);
-    });
-
-    // Skill items hover sound effect (visual feedback)
-    document.querySelectorAll('.skill-item').forEach(item => {
-      item.addEventListener('mouseenter', () => {
-        item.style.transform = 'translateY(-10px) scale(1.05)';
-      });
-
-      item.addEventListener('mouseleave', () => {
-        item.style.transform = 'translateY(0) scale(1)';
-      });
     });
 
     // Welcome message
